@@ -162,18 +162,30 @@ def main():
                 else: 
                     person_smpl = out['pred_smpl_params'][n].detach().cpu().numpy().tolist()
 
-                pred_cam_t = out['pred_cam_t'][n].detach().cpu().numpy().tolist()
+                # --- begin replacement ---
+                # Build a flat dict of everything in `out` for person n
+                output_params = {}
+                for key, val in out.items():
+                    # Handle nested dicts (e.g. pred_smpl_params might be a dict)
+                    if isinstance(val, dict):
+                        nested = {}
+                        for subk, subv in val.items():
+                            # subv is a Tensor: take the nth element
+                            nested[subk] = subv[n].detach().cpu().numpy().tolist()
+                        output_params[key] = nested
+                    else:
+                        # val is a Tensor: slice nth element
+                        output_params[key] = val[n].detach().cpu().numpy().tolist()
 
-                output_params = {
-                    "pred_smpl_params": person_smpl, 
-                    "pred_cam_t": pred_cam_t,
-                }
+                # Add any other globals you want, e.g. scaled focal length
+                output_params["scaled_focal_length"] = float(scaled_focal_length)
 
+                # Write this person's JSON
                 json_path = os.path.join(subfolder_path, f'{img_fn}_{person_id}.json')
-                with open(json_path, 'w') as f: 
-                    json.dump(output_params, f, indent=4) 
-                    print(f"Saved JSON for {img_fn}{person_id}: {json_path}")
-
+                with open(json_path, 'w') as f:
+                    json.dump(output_params, f, indent=4)
+                print(f"Saved JSON for {img_fn}{person_id}: {json_path}")
+                # --- end replacement ---
 
         # Render front view
         if args.full_frame and len(all_verts) > 0:

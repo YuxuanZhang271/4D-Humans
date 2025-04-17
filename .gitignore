@@ -10,7 +10,7 @@
 *.tar.gz
 /discord_sandbox/
 /demo_out/
-/smplx/
+/models/
 token_channel.csv
 /hmr2_training_data/
 /hmr2_evaluation_data/

@@ -1,4 +1,4 @@
-name: 4D-humans
+name: 4d
 channels:
   - pytorch
   - nvidia
@@ -7,7 +7,7 @@ dependencies:
   - python=3.10
   - numpy
   - pytorch
-  - pytorch-cuda=11.8
+  - pytorch-cuda=12.4
   - torchvision
   - pip
   - pip:
