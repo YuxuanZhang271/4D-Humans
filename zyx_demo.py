@@ -179,6 +179,7 @@ def main():
 
                 # Add any other globals you want, e.g. scaled focal length
                 output_params["scaled_focal_length"] = float(scaled_focal_length)
+                output_params["pred_cam_t_full"] = pred_cam_t_full.tolist()
 
                 # Write this person's JSON
                 json_path = os.path.join(subfolder_path, f'{img_fn}_{person_id}.json')
