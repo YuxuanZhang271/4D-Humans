@@ -16,8 +16,6 @@ import json
 LIGHT_BLUE=(0.65098039,  0.74117647,  0.85882353)
 
 def main():
-    import time
-    start = time.time()
     parser = argparse.ArgumentParser(description='HMR2 demo code')
     parser.add_argument('--checkpoint', type=str, default=DEFAULT_CHECKPOINT, help='Path to pretrained model checkpoint')
     parser.add_argument('-i', '--img_folder', type=str, default='example_data/images', help='Folder with input images')
@@ -203,9 +201,6 @@ def main():
             input_img_overlay = input_img[:,:,:3] * (1-cam_view[:,:,3:]) + cam_view[:,:,:3] * cam_view[:,:,3:]
 
             cv2.imwrite(os.path.join(subfolder_path, f'{img_fn}_all.png'), 255*input_img_overlay[:, :, ::-1])
-
-        end = time.time()
-        print(end - start)
 
 if __name__ == '__main__':
     main()
