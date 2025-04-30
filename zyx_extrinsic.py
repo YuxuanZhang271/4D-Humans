@@ -119,7 +119,7 @@ extrinsics = {
     "translation_vector": T.flatten().tolist()  # 3×1 → [x, y, z]
 }
 
-out_path = "stereo_extrinsics.json"
+out_path = os.path.join(base_path, "stereo_extrinsics.json")
 with open(out_path, "w") as jf:
     json.dump(extrinsics, jf, indent=4)
 print(f"Saved extrinsics to {out_path}")
